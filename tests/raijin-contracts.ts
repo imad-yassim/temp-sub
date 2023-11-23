@@ -2,23 +2,42 @@ import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
 import { RaijinContracts } from "../target/types/raijin_contracts";
 import fs from "fs";
-import UserKP from "../data-kp.json";
 import { publicKey } from "@coral-xyz/anchor/dist/cjs/utils";
 
-import solana, { PublicKey } from "@solana/web3.js";
+import solana, { Keypair, LAMPORTS_PER_SOL, PublicKey } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@coral-xyz/anchor/dist/cjs/utils/token";
 import { min } from "bn.js";
 
-describe("raijin-contracts", () => {
+describe("raijin-contracts", async () => {
   // Configure the client to use the local cluster.
   anchor.setProvider(anchor.AnchorProvider.env());
 
+  
   const program = anchor.workspace.RaijinContracts as Program<RaijinContracts>;
 
-  const userKP = anchor.web3.Keypair.fromSecretKey(Uint8Array.from(UserKP));
-  const paymentAccountPK = new PublicKey(
-    "RJN7Y7Y8niBKKnQgMQK5zcCY8Hz5uE9sC1DXbZxSmkT"
-  );
+  const userKP = new Keypair();
+  console.log(`\n✅Created Authority Keypair : ${userKP.publicKey}.\n`)
+
+  const userKPtransaction = await  anchor
+  .getProvider()
+  .connection.requestAirdrop(userKP.publicKey, 5 * LAMPORTS_PER_SOL);
+
+  await anchor
+  .getProvider()
+  .connection.confirmTransaction(userKPtransaction);
+
+  const paymentAccount = new Keypair();
+  const paymentAccountPK = paymentAccount.publicKey
+  console.log(`\n✅Created Authority Keypair : ${userKP.publicKey}.\n`)
+
+  const paymentAccountPKtransaction = await  anchor
+  .getProvider()
+  .connection.requestAirdrop(paymentAccountPK, 5 * LAMPORTS_PER_SOL);
+
+  await  anchor
+  .getProvider()
+  .connection.confirmTransaction(paymentAccountPKtransaction);
+  
   const mint = new anchor.web3.PublicKey(
     "RJN7Y7Y8niBKKnQgMQK5zcCY8Hz5uE9sC1DXbZxSmkT"
   );
