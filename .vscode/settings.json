@@ -1,0 +1,5 @@
+{
+    "rust-analyzer.linkedProjects": [
+        "./programs/raijin-contracts/Cargo.toml"
+    ]
+}
