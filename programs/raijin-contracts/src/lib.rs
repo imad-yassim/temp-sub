@@ -23,7 +23,7 @@ pub mod raijin_contracts {
     }
 
     /// Updates an existing subscription.
-    pub fn extend_subscription(ctx: Context<UpdateSubscribtionAccounts>, value: u8) -> Result<()> {
+    pub fn extend_subscription(ctx: Context<UpdateSubscriptionAccounts>, value: u8) -> Result<()> {
         update_subscription_instruction(ctx, value);
         Ok(())
     }

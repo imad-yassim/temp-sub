@@ -1,10 +1,10 @@
 use crate::state::subscription::*;
 use anchor_lang::prelude::*;
 
-pub fn update_subscription_instruction(ctx: Context<UpdateSubscribtionAccounts>, _paid: u8) {}
+pub fn update_subscription_instruction(ctx: Context<UpdateSubscriptionAccounts>, _paid: u8) {}
 
 #[derive(Accounts)]
-pub struct UpdateSubscribtionAccounts<'info> {
+pub struct UpdateSubscriptionAccounts<'info> {
     #[account(
 		init,
   		seeds = [ b"subscription_data_accoudnt", user.key().as_ref() ],
